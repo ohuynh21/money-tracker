@@ -6,12 +6,12 @@
         "use": "@vercel/node"
       },
   
-      // that is what I tried but it's not working:
+      
       {
         "src": "./client/package.json",
         "use": "@vercel/static-build"
       }
-      // End of the non-functional code  
+    
     ],
     "routes": [
       {
@@ -19,7 +19,7 @@
         "dest": "api/index.js"
       },
   
-      // that is what I tried but it's not working:
+ 
       {
         "src": "client/build/static/.*",
         "dest": "static/.*"
@@ -28,6 +28,6 @@
         "src": "client/build/index.html",
         "dest": "index.html"
       }
-      // End of the non-functional code  
+  
     ]
 }
