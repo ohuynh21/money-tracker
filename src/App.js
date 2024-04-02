@@ -1,52 +1,88 @@
+import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
+  const [name, setName] = useState('')
+  const [amount, setAmount] = useState('')
+  const [date, setDate] = useState(new Date().toJSON().slice(0,10))
+  const [desc, setDesc] = useState('')
+
+  const [transactions, setTransactions] = useState([])
+  // await?
+  const addNewTransaction = (e) => { 
+    e.preventDefault()
+    fetch(`${process.env.REACT_APP_API_URL}/add-transaction`,
+      {
+        method: 'POST',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({name, amount, desc, date})
+      }
+    ).then((response) => {
+      response.json().then(json => {
+        setName('')
+        setAmount('')
+        setDesc('')
+        console.log(json)
+      })
+
+  })}
   
-  
+  async function getTransactions() {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/get-transactions`)
+    return response.json()
+  }
+
+  useEffect(() => {
+    async function fetchData() {
+        try {
+            const transactions = await getTransactions();
+            setTransactions(transactions);
+            console.log(transactions.length);
+        } catch (error) {
+            console.error('Error fetching transactions:', error);
+        }
+    }
+
+    fetchData();
+}, []);
+
+
+  let balance = 0
+  for (const transaction of transactions) {
+    balance += transaction.amount
+  }
+
+  balance = balance.toFixed(2)
+
   return (
     <main>
-      <h1>100<span>.00</span></h1>
-      <form>
+      <h1>${balance}</h1>
+      <form onSubmit={addNewTransaction}>
+    
         <div className='basic'>
-          <input type='text' placeholder='Purchased Item'></input>
-          <input type='datetime-local'></input>
+          <input type='text' placeholder='Name' value = {name} onChange={(e) => setName(e.target.value)}></input>
+          <input type='text' placeholder='Amount ($)' value = {amount} onChange={(e) => setAmount(e.target.value)}></input>
+          <input type='date' value = {date} onChange={(e) => setDate(e.target.value)}></input>
         </div>
         <div>
-          <input type='text' placeholder='Add a Note'></input>
+          <input type='text' placeholder='Add a Note' value = {desc} onChange={(e) => setDesc(e.target.value)}></input>
         </div>
         <button>Add New Transaction</button>
       </form>
       <div className='transactions'>
-        <div className='transaction'>
-          <div className='left'>
-            <div className='name'>Name</div>
-            <div className='description'>Description</div>
+        {transactions.length > 0 && transactions.map(transaction => (
+          <div className='transaction'>
+            <div className='left'>
+              <div className='name'>{transaction.name}</div>
+              <div className='description'>{transaction.desc}</div>
+              </div>
+            <div className='right'>
+              <div className='pos-price'>{transaction.amount}</div>
+              <div className='date'>{transaction.date.slice(0,10)}</div>
             </div>
-          <div className='right'>
-            <div className='pos-price'>$100</div>
-            <div className='date'>10/9/2001</div>
           </div>
-        </div>
-        <div className='transaction'>
-          <div className='left'>
-            <div className='name'>Name</div>
-            <div className='description'>Description</div>
-            </div>
-          <div className='right'>
-            <div className='neg-price'>$100</div>
-            <div className='date'>10/9/2001</div>
-          </div>
-        </div>
-        <div className='transaction'>
-          <div className='left'>
-            <div className='name'>Name</div>
-            <div className='description'>Description</div>
-            </div>
-          <div className='right'>
-            <div className='price'>$100</div>
-            <div className='date'>10/9/2001</div>
-          </div>
-        </div>
+        ))}
+        
       </div>
     </main>
   );
