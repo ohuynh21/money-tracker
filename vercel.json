@@ -1,5 +1,33 @@
 {
-    "rewrites":  [
-      {"source": "/(.*)", "destination": "/"}
+    "version": 2,
+    "builds": [
+      {
+        "src": "./api/index.js",
+        "use": "@vercel/node"
+      },
+  
+      // that is what I tried but it's not working:
+      {
+        "src": "./client/package.json",
+        "use": "@vercel/static-build"
+      }
+      // End of the non-functional code  
+    ],
+    "routes": [
+      {
+        "src": "api/.*",
+        "dest": "api/index.js"
+      },
+  
+      // that is what I tried but it's not working:
+      {
+        "src": "client/build/static/.*",
+        "dest": "static/.*"
+      },
+      {
+        "src": "client/build/index.html",
+        "dest": "index.html"
+      }
+      // End of the non-functional code  
     ]
 }

@@ -9,6 +9,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "gh-pages": "^6.1.1",
     "mongoose": "^8.2.4",
     "nodemon": "^3.1.0",
     "react": "^18.2.0",
@@ -19,9 +20,12 @@
   "scripts": {
     "start:frontend": "react-scripts start",
     "start:backend": "node api/index.js",
-    "dev": "concurrently -n \"FRONTEND,BACKEND\" -c \"red,blue\" -p \"[{name}]\" \"npm run start:frontend\" \"npm run start:backend\"",    "build": "react-scripts build",
+    "dev": "concurrently -n \"FRONTEND,BACKEND\" -c \"red,blue\" -p \"[{name}]\" \"npm run start:frontend\" \"npm run start:backend\"",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -43,5 +47,6 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
-  }
+  },
+  "homepage": "https://ohuynh21.github.io/money-tracker"
 }
