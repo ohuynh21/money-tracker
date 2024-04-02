@@ -17,7 +17,7 @@ app.get('/api/test', (req, res) => {
 app.post('/api/add-transaction', async (req, res) => {
     try {
             //console.log(process.env.MONGO_URL)
-        await mongoose.connect(process.env.REACT_APP_MONGO_URL)
+        await mongoose.connect('mongodb+srv://admin:yqNMR2fA589lXUJH@cluster0.rc50zsu.mongodb.net/')
         const {name, desc, date, amount} = req.body
         const transaction = await Transaction.create({name, desc, date, amount})
         res.json(transaction)
@@ -34,7 +34,7 @@ app.post('/api/add-transaction', async (req, res) => {
 
 app.get('/api/get-transactions', async (req, res) => {
     try {
-        await mongoose.connect(process.env.REACT_APP_MONGO_URL)
+        await mongoose.connect('mongodb+srv://admin:yqNMR2fA589lXUJH@cluster0.rc50zsu.mongodb.net/')
         const transactions = await Transaction.find()
         res.json(transactions)
         
