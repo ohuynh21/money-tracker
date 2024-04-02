@@ -47,6 +47,5 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
-  },
-  "homepage": "https://ohuynh21.github.io/money-tracker"
+  }
 }
