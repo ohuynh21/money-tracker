@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-require('dotenv').config({path: '../.env'})
+require('dotenv').config()
 const Transaction = require('./models/transaction');
 const mongoose = require('mongoose');
 const transaction = require('./models/transaction');
