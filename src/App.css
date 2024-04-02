@@ -36,3 +36,103 @@
     transform: rotate(360deg);
   }
 }
+* {
+  box-sizing: border-box;
+}
+main {
+  max-width: 40%;
+  margin: 5% auto;
+
+}
+
+body {
+  background-color: black;
+  color: white;
+}
+
+h1 {
+  text-align: center;
+  margin: 0;
+  font-size: 5rem;
+}
+
+form {
+  margin-top: 1.5rem;
+}
+
+form input {
+  width: 100%;
+  font-size: 1.5rem;
+  background-color: transparent;
+  color: white;
+  border: 0.2rem solid gray;
+  padding: 2px 5px;
+  border-radius: 5px;
+}
+
+form input[type='datetime-local'] {
+  color: gray;
+}
+
+form div.basic {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+
+form button {
+  width: 100%;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem;
+  background-color: white;
+  font-size: 1.5rem;
+}
+
+div.transactions {
+  margin-top: 1rem;
+}
+
+div.transaction {
+  display: flex;
+  padding: 5px none;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-top: 0.1rem solid gray;
+}
+
+div.transaction:first-child {
+  border-top: none;
+}
+
+div.transaction div.name {
+  font-size: 1.5rem;
+
+}
+
+div.transaction div.description {
+  font-size: 1rem;
+  color: gray;
+  
+}
+
+div.right {
+  text-align: right;
+}
+
+div.pos-price {
+  color: green;
+  font-size: 1.5rem;
+}
+
+div.neg-price {
+  color: red;
+  font-size: 1.5rem;
+}
+
+div.transaction div.date {
+  font-size: 1rem;
+  color: gray;
+}
