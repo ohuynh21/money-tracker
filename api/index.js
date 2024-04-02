@@ -14,12 +14,17 @@ app.get('/api/test', (req, res) => {
 })
 
 app.post('/api/add-transaction', async (req, res) => {
-    
-    //console.log(process.env.MONGO_URL)
-    await mongoose.connect('mongodb+srv://admin:yqNMR2fA589lXUJH@cluster0.rc50zsu.mongodb.net/')
-    const {name, desc, date, amount} = req.body
-    const transaction = await Transaction.create({name, desc, date, amount})
-    res.json(transaction)
+    try {
+            //console.log(process.env.MONGO_URL)
+        await mongoose.connect(process.env.MONGO_URL)
+        const {name, desc, date, amount} = req.body
+        const transaction = await Transaction.create({name, desc, date, amount})
+        res.json(transaction)
+        
+    } catch (error) {
+        console.log(error)
+    }
+
 
     //console.log(req.body)
     
@@ -27,11 +32,14 @@ app.post('/api/add-transaction', async (req, res) => {
 })
 
 app.get('/api/get-transactions', async (req, res) => {
-    await mongoose.connect('mongodb+srv://admin:yqNMR2fA589lXUJH@cluster0.rc50zsu.mongodb.net/')
-    const transactions = await Transaction.find()
-
-    res.json(transactions)
-
+    try {
+        await mongoose.connect(process.env.MONGO_URL)
+        const transactions = await Transaction.find()
+        res.json(transactions)
+        
+    } catch (error) {
+        console.error(error)
+    }
 })
 
 app.listen(3001)

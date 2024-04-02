@@ -11,25 +11,34 @@ function App() {
   // await?
   const addNewTransaction = (e) => { 
     e.preventDefault()
-    fetch(`${process.env.REACT_APP_API_URL}/add-transaction`,
+
+    try {
+      fetch(`${process.env.REACT_APP_API_URL}/add-transaction`,
       {
         method: 'POST',
         headers: {'Content-type': 'application/json'},
         body: JSON.stringify({name, amount, desc, date})
-      }
-    ).then((response) => {
-      response.json().then(json => {
-        setName('')
-        setAmount('')
-        setDesc('')
-        console.log(json)
+      }).then((response) => {
+        response.json().then(json => {
+          setName('')
+          setAmount('')
+          setDesc('')
+          console.log(json)
+        })
       })
-
-  })}
+    } catch (error) {
+      console.error(error)
+    }
+   }
   
   async function getTransactions() {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/get-transactions`)
-    return response.json()
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/get-transactions`)
+      return response.json()
+      
+    } catch (error) {
+      console.log('Error sending transaction:', error);
+    }
   }
 
   useEffect(() => {
@@ -71,7 +80,7 @@ function App() {
       </form>
       <div className='transactions'>
         {transactions.length > 0 && transactions.map(transaction => (
-          <div className='transaction'>
+          <div className='transaction' key = {transaction._id}>
             <div className='left'>
               <div className='name'>{transaction.name}</div>
               <div className='description'>{transaction.desc}</div>
